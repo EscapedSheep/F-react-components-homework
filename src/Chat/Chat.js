@@ -30,10 +30,32 @@ class Chat extends Component {
   sendMsg = (msg) => {
     const messages = this.state.messages.concat(msg);
     setTimeout(() => {
-      this.setState({
-        messages,
-      });
+      this.setState(
+        {
+          messages,
+        },
+        () => {
+          this.answerCustomer(msg.text);
+        }
+      );
     }, 100);
+  };
+
+  answerCustomer = (customerInput) => {
+    const answerMsg = answersData.find((answer) => this.findTagInInput(answer.tags, customerInput));
+    if (answerMsg !== undefined) {
+      const messages = this.state.messages.concat(answerMsg);
+      setTimeout(() => {
+        this.setState({
+          messages,
+        });
+      }, 100);
+    }
+  };
+
+  findTagInInput = (tags, input) => {
+    const findTag = tags.find((tag) => input.search(tag) !== -1 && tag !== 'DEFAULT');
+    return findTag !== undefined;
   };
 
   render() {

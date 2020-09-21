@@ -21,15 +21,18 @@ class ChatInput extends Component {
     const msg = {
       text: this.state.input,
       role: 'customer',
-      tags: ['custom'],
+      tags: ['customer'],
     };
     sendMsg(msg);
+    this.setState({
+      input: '',
+    });
   };
 
   render() {
     return (
       <footer className="ChatInput">
-        <input type="text" onChange={this.handleInputChange} />
+        <input type="text" onChange={this.handleInputChange} value={this.state.input} />
         <button type="button" onClick={this.handleSend}>
           Send
         </button>
