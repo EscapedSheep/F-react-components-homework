@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './ChatInput.scss';
+import { ROLE } from '../../constants';
 
 class ChatInput extends Component {
   constructor(props, context) {
@@ -18,15 +19,18 @@ class ChatInput extends Component {
   handleSend = (event) => {
     event.preventDefault();
     const { sendMsg } = this.props;
-    const msg = {
-      text: this.state.input,
-      role: 'customer',
-      tags: ['customer'],
-    };
+    const msg = this.createCustomerMsg();
     sendMsg(msg);
     this.setState({
       input: '',
     });
+  };
+
+  createCustomerMsg = () => {
+    return {
+      text: this.state.input,
+      role: ROLE.CUSTOMER,
+    };
   };
 
   render() {
